@@ -129,14 +129,14 @@ void Republisher::initialize()
             this, in_topic,
             std::bind(pub_mem_fn, &this->pub, std::placeholders::_1),
             in_transport,
-            rmw_qos_profile_default,
+            rmw_qos_profile_sensor_data,
             sub_options);
         }
       };
 
     this->pub = image_transport::create_publisher(
       this, out_topic,
-      rmw_qos_profile_default, pub_options);
+      rmw_qos_profile_sensor_data, pub_options);
   } else {
     // Use one specific transport for output
     // Load transport plugin
