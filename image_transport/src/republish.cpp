@@ -137,6 +137,7 @@ void Republisher::initialize()
     this->pub = image_transport::create_publisher(
       this, out_topic,
       rmw_qos_profile_sensor_data, pub_options);
+    RCLCPP_INFO_STREAM(this->get_logger(), "qos configured");
   } else {
     // Use one specific transport for output
     // Load transport plugin
@@ -162,11 +163,12 @@ void Republisher::initialize()
             this, in_topic,
             std::bind(
               pub_mem_fn,
-              this->instance.get(), std::placeholders::_1), in_transport, rmw_qos_profile_default,
+              this->instance.get(), std::placeholders::_1), in_transport, rmw_qos_profile_sensor_data,
             sub_options);
         }
       };
 
+    RCLCPP_INFO_STREAM(this->get_logger(), "qos configured");
     this->instance->advertise(this, out_topic, rmw_qos_profile_default, pub_options);
   }
 }
